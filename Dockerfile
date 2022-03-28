@@ -21,8 +21,16 @@ WORKDIR /app
 
 RUN mvn -Duser.home=/var/maven -Dmaven.repo.local=/var/maven/.m2 -f pom.xml install -DskipTests
 
-EXPOSE 8080
-
+EXPOSE 5000
 
 WORKDIR /app/annotador-rest/
-CMD ["java", "-jar", "target/annotador-rest-0.1.0.jar"]
+
+RUN apt-get update && apt-get install -y python3-pip
+RUN pip3 install Flask==2.0.3
+RUN pip3 install requests==2.25.1
+ENV FLASK_ENV development
+ENV FLASK_APP server
+COPY start.sh start.sh
+COPY server.py server.py
+
+CMD ["bash", "./start.sh"]
