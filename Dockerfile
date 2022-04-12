@@ -22,3 +22,7 @@ WORKDIR /app
 RUN mvn -Duser.home=/var/maven -Dmaven.repo.local=/var/maven/.m2 -f pom.xml install -DskipTests
 
 EXPOSE 8080
+
+
+WORKDIR /app/annotador-rest/
+CMD ["java", "-jar", "target/annotador-rest-0.1.0.jar"]
